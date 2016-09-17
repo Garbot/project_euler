@@ -23,7 +23,7 @@ function euler1()
 			sum+=i;
 		}
 	}
-	return sum;
+	return sum;		//233168
 }
 
    /*************/
@@ -55,9 +55,9 @@ function euler2()
 	//kick off recursion
 	Fib(1, 1);
 
-	//sum even fibonacci terms
+	//sum even fibonacci terms		//4613732
 	return evenFibs.reduce(function(a, b){
-		return a + b;
+		return a + b;		
 	});
 }
 
@@ -103,6 +103,104 @@ function euler3(num)
 
 	findPrimeFactors(num);
 
-	return factors.pop();
+	return factors.pop();		//6857
 
 }
+
+   /*************/
+  /*PROBLEM #4 */
+ /*************/
+/*
+A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
+
+Find the largest palindrome made from the product of two 3-digit numbers.
+*/
+
+function euler4()
+{
+
+	var palindromes = [];
+
+	//Using 2 for loops from 100 to 999 is O^2.  we can eliminate several iterations by instead doing the following:
+	//
+	//1)  don't do the same calculation twice.  I.e. don't do i = 300 * j = 700 and then j = 700 * i = 300.
+	//    to accomplish this, we can set the inner loop to start at 999 and decrement only to i.
+
+
+	for(var i = 100; i <= 999; i++)
+	{
+		for(var j = 999; j > i; j--)
+		{
+			var temp = (i*j).toString();
+
+			//check if palindrome
+			var palindrome = true;
+			for(k = 0; k < temp.length; k++)
+			{
+				if(temp[k] != temp[temp.length-1-k])
+				{
+					//break if not palindrome
+					k = temp.length;
+					palindrome = false;
+				}
+			}
+			if(palindrome) palindromes.push(temp);
+
+		}
+	}
+
+	return Math.max.apply(Math, palindromes);		//906609
+}
+
+   /*************/
+  /*PROBLEM #5 */
+ /*************/
+/*
+2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
+
+What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
+*/
+
+//supes quick and dirty
+function euler5()
+{
+	var n = 2520;
+	var notDivisible = true;
+	while(notDivisible)
+	{
+		for(i = 1; i <= 20; i++)
+		{
+			if(n % i != 0)
+			{
+				i = 21; //break
+			} else if (i == 20 && n % i == 0)
+			{
+				return n;		//232792560
+			}
+		}
+		n++
+	}
+}
+
+
+   /*************/
+  /*PROBLEM #6 */
+ /*************/
+/*
+The sum of the squares of the first ten natural numbers is,
+
+1^2 + 2^2 + ... + 10^2 = 385
+The square of the sum of the first ten natural numbers is,
+
+(1 + 2 + ... + 10)2 = 55^2 = 3025
+Hence the difference between the sum of the squares of the first ten natural numbers and the square of the sum is 3025 − 385 = 2640.
+
+Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
+*/
+
+function euler6()
+{
+	
+}
+
+
