@@ -226,16 +226,33 @@ What is the 10 001st prime number?
 */
 
 //generate n amount of primes
-function primeGen(n)
+function euler7(n)
 {
 
-	var primeCount = 0;
-	var currPrime = 2;
+	var currPrime = 5;
+	var primeCount = 2;
+	var primes = [2,3]
 
-	while(primeCount <= n)
+	while(primes.length < n)
 	{
-		
+		//assume prime until proven otherwise
+		var isPrime = true;
+		for(i = 0; i < primes.length; i++)
+		{
+			if(currPrime % primes[i] == 0){
+				isPrime = false;
+				i = primes.length;		//break
+			}
+		}	
+
+		if(isPrime)
+		{
+			primes.push(currPrime);
+		}		
+		currPrime++;
 	}
+
+	return primes.pop();	//euler7(10001) = 104743
 }
 
    /*************/
@@ -298,4 +315,56 @@ function euler8()
 
 }
 
+
+   /*************/
+  /*PROBLEM #9 */
+ /*************/
+/*
+A Pythagorean triplet is a set of three natural numbers, a < b < c, for which,
+
+a^2 + b^2 = c^2
+For example, 3^2 + 4^2 = 9 + 16 = 25 = 5^2.
+
+There exists exactly one Pythagorean triplet for which a + b + c = 1000.
+Find the product abc.
+*/
+
+function euler9(limit)
+{
+	var trifectas = [];		//it's awesome, baby!
+
+	//skip 1 because 1^2 is 1 and can't be part of a pythagorean triplet
+	for(b=3;b<limit;b++)
+	{
+		a = 2;
+		while(a<b)
+		{
+			var bSq = b * b;		//a^2
+			var aSq = a * a;		//b^2
+			var cSq = aSq + bSq;		
+			
+			var c = Math.sqrt(cSq);		//see if c^2, if not, it doesn't meet criteria
+			
+			if(Number.isInteger(c))
+			{
+				trifectas.push([a, b, c]);
+			}
+
+			a++;		//next iteration
+		}
+	}
+
+	//filter only sums of 1000
+	trifectas = trifectas.filter(function(n){
+			return (n[0] + n[1] + n[2] == 1000);		
+		})
+
+	//array within array - should only be one item though
+	if(trifectas[0]){
+		return trifectas[0].reduce(function(a,b){return a*b;});		//trifectas(500) = 31875000
+	}
+	else{
+		return "no match";
+	}
+}
 
