@@ -511,7 +511,7 @@ function euler12(){
 		}
 
 		if(divisors>500){
-			return i;			//76576500
+			return i;			//765765002
 		}
 		n++
 	}
